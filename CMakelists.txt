@@ -1,0 +1,2 @@
+add_executable(e1 main1.cpp sharedmem.cpp)
+add_executable(e2 main2.cpp sharedmem.cpp)
