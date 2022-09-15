@@ -8,16 +8,26 @@ int main()
 {
     void* shmp = createShmem(SHM_KEY);
 
-    Data initData;
-    memcpy(shmp, &initData, sizeof(Data));
+    std::atomic<Data> init_data;
+    memcpy(shmp, &init_data, sizeof(std::atomic<Data>));
 
-    for(int i = 0; i < 100000; ++i){
-        auto* data = (Data*)shmp;
-        data->m.lock();
-        data->my_data = i;
-        data->timestamp = std::chrono::system_clock::now();
-        data->m.unlock();
-        sleep(3);
+    std::cout << "I output an incrementing number every 10 milliseconds.\n";
+
+    auto* output_data_ptr = (std::atomic<Data>*)shmp;
+    for(int i = 0; i < INT32_MAX; ++i){
+        auto time = std::chrono::system_clock::now();
+        
+        std::cout <<"\t\t\t\t\t\r" << std::flush;
+        std::cout << "Outputting Data: " << i;
+        Data new_data;
+        new_data.my_data = i;
+        new_data.timestamp = time;
+        
+        output_data_ptr->store(new_data);
+
+        usleep(10000);
     }
     killShmem(SHM_KEY);
+
+    return 0;
 }

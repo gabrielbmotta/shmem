@@ -1,2 +1,10 @@
+set(CMAKE_MINIMUM_REQUIRED_VERSION 3.8)
+project(shmem)
+
+set(CMAKE_CXX_STANDARD 11)
+
+set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_SOURCE_DIR}/bin/)
+
 add_executable(e1 main1.cpp sharedmem.cpp)
 add_executable(e2 main2.cpp sharedmem.cpp)
+add_executable(e3 main3.cpp sharedmem.cpp)

@@ -5,9 +5,10 @@
 
 #include <thread>
 #include <chrono>
+#include <atomic>
 
 struct Data{
-    std::mutex m;
+    // std::mutex m;
     std::chrono::time_point<std::chrono::system_clock> timestamp;
     int my_data;
 };
